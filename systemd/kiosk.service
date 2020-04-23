@@ -4,7 +4,7 @@ After=network.target ntpdate.service
 
 [Service]
 Environment=PATH=/home/pi/dashboard:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
-ExecStart=/usr/bin/bash bin/kiosk
+ExecStart=/bin/bash bin/kiosk
 WorkingDirectory=/home/pi/dashboard/
 StandardOutput=inherit
 StandardError=inherit
