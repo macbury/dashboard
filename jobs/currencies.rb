@@ -21,8 +21,8 @@ resources = [
 def emit_ranges_for(group, data, range)
   group.each do |currency|
     valuations = data[currency]
-    start = valuations[1]['last']&.round(2)
-    last = valuations[2]['last']&.round(2)
+    start = valuations[2]['last']&.round(2)
+    last = valuations[1]['last']&.round(2)
 
     send_event("currency-#{currency}", {
       current: start, last: last
