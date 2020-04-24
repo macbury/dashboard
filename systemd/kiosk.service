@@ -1,17 +1,15 @@
 [Unit]
-Description=Kiosk Service
-After=network.target ntpdate.service
+Description=Kiosk
+Requires=graphical.target
+After=graphical.target
 
 [Service]
-Environment=PATH=/home/pi/dashboard:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
-ExecStart=/bin/bash bin/kiosk
-WorkingDirectory=/home/pi/dashboard/
-StandardOutput=inherit
-StandardError=inherit
-StartLimitBurst=1000
-Restart=always
-RestartSec=90
-User=root
+Environment=DISPLAY=:0.0
+Environment=XAUTHORITY=/home/pi/.Xauthority
+ExecStart=/usr/bin/chromium-browser --noerrdialogs --disable-infobars --kiosk http://localhost:3030/tv
+Restart=on-abort
+User=pi
+Group=pi
 
 [Install]
-WantedBy=multi-user.target
+WantedBy=graphical.target

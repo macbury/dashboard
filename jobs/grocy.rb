@@ -20,12 +20,18 @@ def push_events(events, key)
 end
 
 SCHEDULER.every '5m', first_in: 0 do |job|
-  events = NodeRed.new.events
+  grocy = NodeRed.new.grocy
+  expiring_products = grocy.dig('expiring_products')
+  missing_products = grocy.dig('missing_products')
 
-  push_events(
-    (events['personal'] + events['wspolne'] + events['wydatkiArek']),
-    'events-arek'
-  )
+  items = expiring_products.map do |expiring_product|
+    date = DateTime.parse(expiring_product['best_before_date'])
+    {
+      label: expiring_product.dig('product', 'name'),
+      date: date,
+      value: distance_of_time_in_words_to_now(date)
+    }
+  end.sort_by { |e| e[:date]  }
 
-  push_events(events['wydatkiOla'], 'payments-ola')
+  send_event('expiring-products', items: items)
 end

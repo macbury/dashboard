@@ -19,4 +19,8 @@ class NodeRed
   def poland
     self.class.get('/data/poland')
   end
+
+  def grocy
+    self.class.get('/data/grocy')
+  end
 end
