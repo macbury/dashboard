@@ -32,7 +32,7 @@ end
 
 red = NodeRed.new
 
-SCHEDULER.every '10m', first_in: 0 do |job|
+SCHEDULER.every '30s', first_in: 0 do |job|
   data = red.currencies
 
   emit_ranges_for(currency, data, -20)
